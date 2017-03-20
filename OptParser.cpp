@@ -7,11 +7,11 @@
 
 bool CmdLineOptParser::Parse(int args, char *argv[]) {
     // Check for input
-    if ((0 >= args) || (!argv)) {
+    if ((1 >= args) || (!argv)) {
         return false;
     }
 
-    for (int position = 0; args >= position; position++) {
+    for (int position = 1; args >= position; position++) {
 
         // Check for first arg size
         int size;
