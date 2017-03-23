@@ -5,20 +5,25 @@
 #ifndef EMBEDDED_SYSTEMS_KOMMANDOZEILENPARSER_CMDLINEOPTPARSER_H
 #define EMBEDDED_SYSTEMS_KOMMANDOZEILENPARSER_CMDLINEOPTPARSER_H
 
-
 class CmdLineOptParser {
 public:
-    // returns true, if all arguments are successfully parsed.
-    bool Parse(int args, char* argv[]);
+	// returns true, if all arguments are successfully parsed.
+	bool Parse(int args, char *argv[]);
 
 protected:
-    // returns true, if option was suchessfully parsed.
-    virtual bool Option(const char c, const char* info);
+	// returns true, if option was suchessfully parsed.
+	virtual bool Option(const char c, const char *info);
 
 private:
-    // returns true, if parameter successfully parsed
-    bool ParseParameter(char *parameter);
-};
+	// returns true, if parameter successfully parsed
+	bool ParseParameter(const char *parameter, char *option, const int startPoint);
 
+	// returns length of array
+	int getArrayLength(const char *array);
+
+	bool isalnum(const char c);
+
+	bool isalpha(const char c);
+};
 
 #endif //EMBEDDED_SYSTEMS_KOMMANDOZEILENPARSER_CMDLINEOPTPARSER_H

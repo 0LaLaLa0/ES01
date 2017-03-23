@@ -4,5 +4,10 @@
 int main(int args, char *argv[]) {
     CmdLineOptParser *obj = new CmdLineOptParser();
 
-    std::cout << obj->Parse(args, argv+1);
+    if (obj->Parse(args, argv)) {
+        std::cout << "True";
+    }
+    else {
+        std::cout << "False";
+    }
 }
