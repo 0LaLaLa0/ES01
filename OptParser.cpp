@@ -19,7 +19,7 @@ bool CmdLineOptParser::Parse(int args, char *argv[])
 	for (int position = 1; args > position; position++) {
 		// Check for first arg size
 		int size;
-		size = getArrayLength(arguments[position]);
+		size = getStringLength(arguments[position]);
 		if (1 >= size) {
 			return false;
 		}
@@ -38,14 +38,16 @@ bool CmdLineOptParser::Parse(int args, char *argv[])
 		char option[256];
 
 		// Check for complete arg and check parameter
-		if (2 >= size && 2 <= size) {
+		if (2 == size) {
 			if (((position + 1) < args) && arguments[position + 1][0] != '-') {
-				if (!ParseParameter(arguments[position + 1], option, 2)) {
+				// flag followed by whitespace, followed by a parameter
+				if (!ParseParameter(arguments[position + 1], option, 0)) {
 					return false;
 				};
 				if (!Option(flag, option)) {
 					return false;
 				};
+				// skip parameter
 				position++;
 				continue;
 			}
@@ -63,6 +65,7 @@ bool CmdLineOptParser::Parse(int args, char *argv[])
 		// Check for '='
 		if (arguments[position][2] == '=') {
 			if (arguments[position][3] == '\0') {
+				// parameter needs to have something behind '='
 				return false;
 			}
 			// Check parameter beginning at arguments[position][3]
@@ -86,29 +89,32 @@ bool CmdLineOptParser::Parse(int args, char *argv[])
 bool CmdLineOptParser::Option(const char flag, const char *option)
 {
 	// Do things with your options
-	// always return true, so it runs through
+	// always return true, when you at least have a flag
 	return (flag && option) || flag;
 }
 
 bool CmdLineOptParser::ParseParameter(const char parameter[], char *option, const int startPoint)
 {
 	int size;
-	size = getArrayLength(parameter);
+	size = getStringLength(parameter);
 	int counter;
+	// write parameter into option
 	for (counter = startPoint; counter < size; counter++) {
 		if (!isalnum(parameter[counter])) {
 			return false;
 		}
 		option[counter - 2] = parameter[counter];
 	}
+	// make it a valid string
 	option[counter + 1] = '\0';
 	return true;
 }
 
-int CmdLineOptParser::getArrayLength(const char *array)
+int CmdLineOptParser::getStringLength(const char *array)
 {
 	int length = 0;
 
+	// increase length, as long as the string does not end
 	while (array[length] != '\0') {
 		length++;
 	}
@@ -117,10 +123,15 @@ int CmdLineOptParser::getArrayLength(const char *array)
 
 bool CmdLineOptParser::isalnum(const char c)
 {
-	return (91 > c && 59 < c) || (123 > c && 96 < c) || (57 > c && 47 < c);
+	// 65-90 are capital letters
+	// 97-122 are lower case letters
+	// 48-57 are numbers
+	return (91 > c && 64 < c) || (123 > c && 96 < c) || (58 > c && 47 < c);
 }
 
 bool CmdLineOptParser::isalpha(const char c)
-{
-	return (91 > c && 59 < c) || (123 > c && 96 < c);
+{	
+	// 65-90 are capital letters
+	// 97-122 are lower case letters
+	return (91 > c && 64 < c) || (123 > c && 96 < c);
 }
