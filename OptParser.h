@@ -18,8 +18,8 @@ private:
 	// returns true, if parameter successfully parsed
 	bool ParseParameter(const char *parameter, char *option, const int startPoint);
 
-	// returns length of array
-	int getArrayLength(const char *array);
+	// returns length of string
+	int getStringLength(const char *array);
 
 	// returns true, if char is alpha-numeric
 	bool isalnum(const char c);
