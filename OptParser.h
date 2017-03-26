@@ -21,8 +21,10 @@ private:
 	// returns length of array
 	int getArrayLength(const char *array);
 
+	// returns true, if char is alpha-numeric
 	bool isalnum(const char c);
 
+	// return true, if char is alphabetic
 	bool isalpha(const char c);
 };
 
