@@ -2,7 +2,7 @@
 // Created by eric on 19.03.17.
 //
 
-#include "OptParser.h"
+#include "../include/OptParser.h"
 
 bool CmdLineOptParser::Parse(int args, char *argv[])
 {
@@ -86,11 +86,11 @@ bool CmdLineOptParser::Parse(int args, char *argv[])
 	return true;
 }
 
-bool CmdLineOptParser::Option(const char flag, const char *option)
+bool CmdLineOptParser::Option(const char, const char *)
 {
 	// Do things with your options
-	// always return true, when you at least have a flag
-	return (flag && option) || flag;
+	// always returns true in this implementation
+	return true;
 }
 
 bool CmdLineOptParser::ParseParameter(const char parameter[], char *option, const int startPoint)
@@ -103,7 +103,7 @@ bool CmdLineOptParser::ParseParameter(const char parameter[], char *option, cons
 		if (!isalnum(parameter[counter])) {
 			return false;
 		}
-		option[counter - 2] = parameter[counter];
+		option[counter - startPoint] = parameter[counter];
 	}
 	// make it a valid string
 	option[counter + 1] = '\0';
@@ -130,7 +130,7 @@ bool CmdLineOptParser::isalnum(const char c)
 }
 
 bool CmdLineOptParser::isalpha(const char c)
-{	
+{
 	// 65-90 are capital letters
 	// 97-122 are lower case letters
 	return (91 > c && 64 < c) || (123 > c && 96 < c);
